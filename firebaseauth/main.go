@@ -7,8 +7,8 @@ import (
 	"slices"
 	"strings"
 
-	firebase "firebase.google.com/go"
-	"firebase.google.com/go/auth"
+	firebase "firebase.google.com/go/v4"
+	"firebase.google.com/go/v4/auth"
 	"github.com/gofiber/fiber/v2"
 	"github.com/pixlware/go-core-fiber/fiberutils"
 )
@@ -154,4 +154,23 @@ func DeleteUser(uid string, tenantId string) error {
 	}
 
 	return deleteUserFunc(context.Background(), uid)
+}
+
+func UpdateTenant(tenantId string, updateProps *auth.TenantToUpdate) error {
+	if tenantId == "" {
+		return ErrorMissingTenantID
+	}
+
+	if tenantId != "" {
+		if slices.Contains(Config.BlacklistTenantIDs, tenantId) {
+			return ErrorInvalidTenantID
+		}
+	}
+
+	_, err := Auth.TenantManager.UpdateTenant(context.Background(), tenantId, updateProps)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
