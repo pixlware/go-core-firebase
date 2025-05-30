@@ -19,7 +19,7 @@ type UserService struct {
 }
 
 type TenantService struct {
-	Create            func(tenant *auth.TenantToCreate) error
+	Create            func(tenant *auth.TenantToCreate) (*auth.Tenant, error)
 	Update            func(tenantId string, updateProps *auth.TenantToUpdate) error
 	UpdateInheritance func(tenantId string, inheritance *TenantInheritance) error
 }
