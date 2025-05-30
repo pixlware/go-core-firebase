@@ -22,6 +22,7 @@ var UserManager = &UserService{
 }
 
 var TenantManager = &TenantService{
+	Create:            createTenant,
 	Update:            updateTenant,
 	UpdateInheritance: updateTenantInheritance,
 }

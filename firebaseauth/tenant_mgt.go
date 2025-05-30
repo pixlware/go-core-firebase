@@ -13,6 +13,15 @@ import (
 	"firebase.google.com/go/v4/auth"
 )
 
+func createTenant(tenant *auth.TenantToCreate) error {
+	_, err := Auth.TenantManager.CreateTenant(context.Background(), tenant)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func updateTenant(tenantId string, updateProps *auth.TenantToUpdate) error {
 	if tenantId == "" {
 		return ErrorMissingTenantID
