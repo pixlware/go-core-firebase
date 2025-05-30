@@ -87,3 +87,15 @@ func updateTenantInheritance(tenantId string, inheritance *TenantInheritance) er
 
 	return nil
 }
+
+func deleteTenant(tenantId string) error {
+	if tenantId == "" {
+		return ErrorMissingTenantID
+	}
+
+	if slices.Contains(Config.BlacklistTenantIDs, tenantId) {
+		return ErrorInvalidTenantID
+	}
+
+	return Auth.TenantManager.DeleteTenant(context.Background(), tenantId)
+}

@@ -25,6 +25,7 @@ var TenantManager = &TenantService{
 	Create:            createTenant,
 	Update:            updateTenant,
 	UpdateInheritance: updateTenantInheritance,
+	Delete:            deleteTenant,
 }
 
 var HandlersManager = &HandlerService{
