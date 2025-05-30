@@ -30,7 +30,7 @@ func updateTenant(tenantId string, updateProps *auth.TenantToUpdate) error {
 	return nil
 }
 
-func updateTenantEmailSendingConfig(tenantId string, emailSendingConfig *TenantEmailSendingConfig) error {
+func updateTenantInheritance(tenantId string, inheritance *TenantInheritance) error {
 	if tenantId == "" {
 		return ErrorMissingTenantID
 	}
@@ -46,9 +46,7 @@ func updateTenantEmailSendingConfig(tenantId string, emailSendingConfig *TenantE
 	}
 
 	jsonData, err := json.Marshal(IdentityPlatformTenantUpdater{
-		Inheritance: &TenantInheritance{
-			EmailSendingConfig: emailSendingConfig,
-		},
+		Inheritance: inheritance,
 	})
 	if err != nil {
 		log.Printf("[FirebaseAuth] Error marshaling request for tenant '%s': %v", tenantId, err)

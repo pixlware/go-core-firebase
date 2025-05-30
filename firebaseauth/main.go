@@ -22,8 +22,8 @@ var UserManager = &UserService{
 }
 
 var TenantManager = &TenantService{
-	Update:                   updateTenant,
-	UpdateEmailSendingConfig: updateTenantEmailSendingConfig,
+	Update:            updateTenant,
+	UpdateInheritance: updateTenantInheritance,
 }
 
 var HandlersManager = &HandlerService{

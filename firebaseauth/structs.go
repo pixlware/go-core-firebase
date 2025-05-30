@@ -19,8 +19,8 @@ type UserService struct {
 }
 
 type TenantService struct {
-	Update                   func(tenantId string, updateProps *auth.TenantToUpdate) error
-	UpdateEmailSendingConfig func(tenantId string, emailSendingConfig *TenantEmailSendingConfig) error
+	Update            func(tenantId string, updateProps *auth.TenantToUpdate) error
+	UpdateInheritance func(tenantId string, inheritance *TenantInheritance) error
 }
 
 type HandlerService struct {
@@ -32,9 +32,5 @@ type IdentityPlatformTenantUpdater struct {
 }
 
 type TenantInheritance struct {
-	EmailSendingConfig *TenantEmailSendingConfig `json:"emailSendingConfig,omitempty"`
-}
-
-type TenantEmailSendingConfig struct {
-	Enabled bool `json:"enabled,omitempty"`
+	EmailSendingConfig bool `json:"emailSendingConfig,omitempty"`
 }
