@@ -54,3 +54,27 @@ func deleteUser(uid string, tenantId string) error {
 
 	return deleteUserFunc(context.Background(), uid)
 }
+
+func updateUser(uid string, user *auth.UserToUpdate, tenantId string) (*auth.UserRecord, error) {
+	var updateUserFunc func(context.Context, string, *auth.UserToUpdate) (*auth.UserRecord, error)
+
+	if tenantId != "" {
+		if slices.Contains(Config.BlacklistTenantIDs, tenantId) {
+			return nil, ErrorInvalidTenantID
+		}
+
+		tenantAuthClient, err := Auth.TenantManager.AuthForTenant(tenantId)
+		if err != nil {
+			return nil, ErrorInvalidTenantID
+		}
+		updateUserFunc = tenantAuthClient.UpdateUser
+	} else if TenantAuth != nil {
+		updateUserFunc = TenantAuth.UpdateUser
+	} else if !Config.EnforceTenant {
+		updateUserFunc = Auth.UpdateUser
+	} else {
+		return nil, ErrorMissingTenantID
+	}
+
+	return updateUserFunc(context.Background(), uid, user)
+}

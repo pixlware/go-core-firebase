@@ -15,6 +15,7 @@ type AuthUser struct {
 
 type UserService struct {
 	Create func(user *auth.UserToCreate, tenantId string) (*auth.UserRecord, error)
+	Update func(uid string, user *auth.UserToUpdate, tenantId string) (*auth.UserRecord, error)
 	Delete func(uid string, tenantId string) error
 }
 

@@ -18,6 +18,7 @@ var (
 
 var UserManager = &UserService{
 	Create: createUser,
+	Update: updateUser,
 	Delete: deleteUser,
 }
 
@@ -34,7 +35,6 @@ var HandlersManager = &HandlerService{
 
 func init() {
 	log.Printf("[FirebaseAuth] Initializing FirebaseAuth...")
-	ctx := context.Background()
 
 	firebaseConfig := &firebase.Config{
 		ProjectID: Config.ProjectID,
@@ -62,7 +62,7 @@ func init() {
 		log.Printf("[FirebaseAuth] Tenant Auth Client Initialized")
 	}
 
-	credentials, err := google.FindDefaultCredentials(ctx, "https://www.googleapis.com/auth/identitytoolkit")
+	credentials, err := google.FindDefaultCredentials(context.Background(), "https://www.googleapis.com/auth/identitytoolkit")
 	if err != nil {
 		log.Fatalf("[FirebaseAuth] Error initializing Identity Platform Credentials: %v\n", err)
 	}
